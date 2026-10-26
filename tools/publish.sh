@@ -9,7 +9,8 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
 # 1. 複製一份 app（不動本機原檔），換成 Pages 用的入口與設定
-rsync -a --exclude node_modules --exclude dist --exclude dist-pages --exclude shots "$APP/" "$WORK/app/"
+mkdir -p "$WORK/app"
+( cd "$APP" && tar cf - --exclude=./node_modules --exclude=./dist --exclude=./dist-pages --exclude=./shots . ) | ( cd "$WORK/app" && tar xf - )
 cp "$REPO/tools/vite.pages.config.ts" "$WORK/app/"
 cp "$REPO/tools/main.pages.tsx" "$WORK/app/src/"
 sed -i.bak 's#/src/main.tsx#/src/main.pages.tsx#' "$WORK/app/index.html"
