@@ -1,0 +1,9 @@
+# 只允許加密成品進 repo；明文與建置暫存一律不收
+node_modules/
+dist/
+dist-pages/
+app/
+content/
+*.json
+!.staticrypt.json
+.env
